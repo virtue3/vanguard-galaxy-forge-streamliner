@@ -1,0 +1,5 @@
+E:\MOD\vanguardGalaxy\VanguardMod\obj\Debug\net46\VanguardMod.csproj.AssemblyReference.cache
+E:\MOD\vanguardGalaxy\VanguardMod\obj\Debug\net46\VanguardMod.GeneratedMSBuildEditorConfig.editorconfig
+E:\MOD\vanguardGalaxy\VanguardMod\obj\Debug\net46\VanguardMod.AssemblyInfoInputs.cache
+E:\MOD\vanguardGalaxy\VanguardMod\obj\Debug\net46\VanguardMod.AssemblyInfo.cs
+E:\MOD\vanguardGalaxy\VanguardMod\obj\Debug\net46\VanguardMod.csproj.CoreCompileInputs.cache
