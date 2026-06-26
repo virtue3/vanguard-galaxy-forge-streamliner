@@ -16,7 +16,7 @@ namespace VanguardMod
                 "Key to show/hide the Forge Streamliner debug panel.");
 
             new Harmony("com.vanguardmod.forgepatch").PatchAll();
-            gameObject.AddComponent<DebugMenu>();
+            gameObject.AddComponent<ForgeStreamlinerUI>();
             Logger.LogInfo("VG Forge Streamliner loaded.");
         }
     }
