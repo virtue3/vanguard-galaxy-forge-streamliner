@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Behaviour.Crafting;
 using Behaviour.UI.Forge;
+using Behaviour.UI.Spacestation;
 using HarmonyLib;
 using Source.Mining;
 
@@ -25,6 +26,17 @@ namespace VanguardMod
         static void Postfix()
         {
             ForgeStreamlinerUI.Instance?.CancelQueue();
+        }
+    }
+
+    // Close the overlay and clear the queue when the station scene is destroyed.
+    // OnDestroy covers all leave paths (airlock, galaxy map travel, scene transitions).
+    [HarmonyPatch(typeof(SpaceStationInterior), "OnDestroy")]
+    internal static class Patch_SpaceStationInterior_OnDestroy
+    {
+        static void Postfix()
+        {
+            ForgeStreamlinerUI.Instance?.OnStationLeft();
         }
     }
 }

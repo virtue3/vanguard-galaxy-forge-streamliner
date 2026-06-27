@@ -14,9 +14,19 @@ namespace VanguardMod
     {
         internal static ForgeStreamlinerUI Instance { get; private set; }
 
+        private static readonly object[] _noArgs = new object[0];
+        private static readonly int _windowId = "com.vanguardmod.forgepatch.window".GetHashCode();
+
         private void Awake() => Instance = this;
+        private void OnDestroy() { if (Instance == this) Instance = null; }
 
         private bool _cancellingJobs;
+
+        internal void OnStationLeft()
+        {
+            _visible = false;
+            CancelQueue();
+        }
 
         internal void CancelQueue()
         {
@@ -41,9 +51,9 @@ namespace VanguardMod
         }
 
         private bool _visible;
-        private bool _wasAtStation;
         private bool _wasForgeOpen;
         private Rect _windowRect = new Rect(100, 100, 360, 500);
+        private Vector2 _queueScroll;
 
         private class CraftOrder
         {
@@ -58,14 +68,6 @@ namespace VanguardMod
         {
             if (Input.GetKeyDown(Plugin.ToggleKey.Value))
                 _visible = !_visible;
-
-            bool atStation = Forge.current != null;
-            if (_wasAtStation && !atStation)
-            {
-                _visible = false;
-                CancelQueue();
-            }
-            _wasAtStation = atStation;
 
             bool forgeOpen = ForgeUI.current != null;
             if (!_wasForgeOpen && forgeOpen)
@@ -154,7 +156,9 @@ namespace VanguardMod
         private void OnGUI()
         {
             if (!_visible) return;
-            _windowRect = GUI.Window(9001, _windowRect, DrawWindow, "VG Forge Streamliner");
+            _windowRect = GUI.Window(_windowId, _windowRect, DrawWindow, "VG Forge Streamliner");
+            _windowRect.x = Mathf.Clamp(_windowRect.x, 0, Screen.width  - _windowRect.width);
+            _windowRect.y = Mathf.Clamp(_windowRect.y, 0, Screen.height - _windowRect.height);
         }
 
         private void DrawWindow(int id)
@@ -184,6 +188,7 @@ namespace VanguardMod
             }
 
             int toRemove = -1;
+            _queueScroll = GUILayout.BeginScrollView(_queueScroll, GUILayout.MaxHeight(200));
             for (int i = 0; i < _craftQueue.Count; i++)
             {
                 var order = _craftQueue[i];
@@ -194,7 +199,7 @@ namespace VanguardMod
                 string suffix = isActive && forge == null ? "  [paused]"
                               : isActive && forge != null && forge.jobs.Count > 0 ? "  [crafting...]"
                               : "";
-                GUILayout.Label(prefix + Translation.Translate(order.Recipe.displayName, new object[0]) + " x" + order.Amount + suffix);
+                GUILayout.Label(prefix + Translation.Translate(order.Recipe.displayName, _noArgs) + " x" + order.Amount + suffix);
                 if (GUILayout.Button("X", GUILayout.Width(26)))
                     toRemove = i;
                 GUILayout.EndHorizontal();
@@ -202,6 +207,7 @@ namespace VanguardMod
                 // Only show sub-components for the item currently being worked on.
                 if (isActive && forge != null)
                 {
+                    // 0 = base ingredient level (game recipes don't use tiered ingredients)
                     foreach (var (item, countPerCraft) in order.Recipe.GetIngredientItems(0))
                     {
                         var subRecipe = CraftingRecipe.GetSourceRecipe(item);
@@ -216,10 +222,11 @@ namespace VanguardMod
                         int runs = Mathf.CeilToInt((float)missing / yieldPerCraft);
                         bool crafting = forge.jobs.Exists(j => j.recipe == subRecipe);
                         string subPrefix = crafting ? "> " : "  ";
-                        GUILayout.Label("    " + subPrefix + Translation.Translate(subRecipe.displayName, new object[0]) + " x" + runs);
+                        GUILayout.Label("    " + subPrefix + Translation.Translate(subRecipe.displayName, _noArgs) + " x" + runs);
                     }
                 }
             }
+            GUILayout.EndScrollView();
 
             if (toRemove == 0)
                 CancelQueue();                  // active item: also kill running forge jobs
@@ -253,7 +260,7 @@ namespace VanguardMod
                 return;
             }
 
-            GUILayout.Label(Translation.Translate(recipe.displayName, new object[0]) + " x" + amount);
+            GUILayout.Label(Translation.Translate(recipe.displayName, _noArgs) + " x" + amount);
 
             int freeSlots = forge.maxJobs - forge.jobs.Count;
             GUILayout.Label("Free slots: " + freeSlots + " / " + forge.maxJobs);
@@ -303,7 +310,7 @@ namespace VanguardMod
 
                 string jobInfo = parallelJobs > 1 ? " -> " + parallelJobs + " parallel jobs" : "";
                 string warning = hasMaterials ? jobInfo : " [insufficient materials]";
-                GUILayout.Label(Translation.Translate(item.displayName, new object[0]) + ": " + runsNeeded + " runs" + warning);
+                GUILayout.Label(Translation.Translate(item.displayName, _noArgs) + ": " + runsNeeded + " runs" + warning);
             }
 
             return anyMissing;
