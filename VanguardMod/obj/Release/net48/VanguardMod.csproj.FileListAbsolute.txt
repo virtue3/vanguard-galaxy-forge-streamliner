@@ -1,0 +1,10 @@
+E:\MOD\vanguardGalaxy\VanguardMod\bin\Release\net48\VGForgeStreamliner.dll
+E:\MOD\vanguardGalaxy\VanguardMod\bin\Release\net48\VGForgeStreamliner.pdb
+E:\MOD\vanguardGalaxy\VanguardMod\obj\Release\net48\VanguardMod.csproj.AssemblyReference.cache
+E:\MOD\vanguardGalaxy\VanguardMod\obj\Release\net48\VanguardMod.GeneratedMSBuildEditorConfig.editorconfig
+E:\MOD\vanguardGalaxy\VanguardMod\obj\Release\net48\VanguardMod.AssemblyInfoInputs.cache
+E:\MOD\vanguardGalaxy\VanguardMod\obj\Release\net48\VanguardMod.AssemblyInfo.cs
+E:\MOD\vanguardGalaxy\VanguardMod\obj\Release\net48\VanguardMod.csproj.CoreCompileInputs.cache
+E:\MOD\vanguardGalaxy\VanguardMod\obj\Release\net48\VanguardMod.sourcelink.json
+E:\MOD\vanguardGalaxy\VanguardMod\obj\Release\net48\VGForgeStreamliner.dll
+E:\MOD\vanguardGalaxy\VanguardMod\obj\Release\net48\VGForgeStreamliner.pdb
