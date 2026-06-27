@@ -13,11 +13,11 @@ namespace VanguardMod
         private void Awake()
         {
             ToggleKey = Config.Bind("General", "ToggleKey", KeyCode.F10,
-                "Key to show/hide the Forge Streamliner debug panel.");
+                "Key to show/hide the Forge Streamliner overlay.");
 
             new Harmony("com.vanguardmod.forgepatch").PatchAll();
             gameObject.AddComponent<ForgeStreamlinerUI>();
-            Logger.LogInfo("VG Forge Streamliner loaded.");
+            Logger.LogInfo($"VG Forge Streamliner loaded. Toggle key: {ToggleKey.Value}");
         }
     }
 }

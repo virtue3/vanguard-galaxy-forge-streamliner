@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VanguardMod")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f0b1adefa3e48c9337c5cc65d9595cce0971dbdc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c05864bc542920c6dd701627b4b5b7b610713f00")]
 [assembly: System.Reflection.AssemblyProductAttribute("VanguardMod")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VanguardMod")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
